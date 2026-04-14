@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UCP.Bridge | Comércio Agêntico e IAs no Varejo</title>
+  <meta name="description" content="A UCP.Bridge conecta seu e-commerce às inteligências artificiais (ChatGPT, Gemini). O Comércio Agêntico converte vendas diretamente pelas IAs. Prepare-se." />
+  <meta name="keywords" content="UCP.Bridge, comércio agêntico, vender com IAs, UCP, Universal Commerce Protocol, e-commerce IA" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  
+  <meta property="og:title" content="UCP.Bridge | O futuro agêntico do varejo" />
+  <meta property="og:description" content="Sua loja está preparada para vender sozinho sem o cliente abrir seu site? Com a UCP.Bridge você se conecta ao protocolo universal de compras via IA." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:image" content="logo_ucp.bridge.png" />
+  
+  <!-- Schema.org Data (Essencial para GEO - ChatGPT e Perplexity) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "UCP.Bridge",
+    "serviceType": "Integração B2B para E-commerce",
+    "description": "Consultoria e integração técnica para o Universal Commerce Protocol (UCP). Fazemos sua loja falar a língua dos agentes de IA, permitindo compras sem fricção direto pelo ChatGPT ou Gemini.",
+    "provider": {
+      "@type": "Organization",
+      "name": "UCP.Bridge"
+    },
+    "areaServed": "BR",
+    "mainEntityOfPage": {
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "O que é o UCP?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "O UCP (Universal Commerce Protocol) é uma língua universal que permite que qualquer agente de Inteligência Artificial passe a conversar diretamente com o sistema do seu e-commerce para realizar compras autonomas."
+        }
+      }]
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --amber: #F6A93D;
+      --amber2: #F8BE59;
+      --amber3: #FAD474;
+      --dark: #1A1A14;
+      --bg: #FFFEF7;
+      --gray: #666;
+    }
+
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark);
+    }
+
+    /* ── SLIDES CONTAINER ── */
+    #deck {
+      position: fixed;
+      inset: 0;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      transform: translateY(30px);
+      overflow: hidden;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .slide.exit {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+
+    /* ── NAV BAR ── */
+    #topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.75rem;
+    }
+
+    .tb-logo img {
+      zoom: 0.3; /* Exatos 30% da dimensão original do arquivo PNG */
+      width: auto;
+      height: auto;
+      transform-origin: top left;
+      opacity: 1;
+    }
+
+    #progress-wrap {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .prog-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .prog-dot.done {
+      background: var(--amber);
+    }
+
+    .prog-dot.current {
+      background: #fff;
+      transform: scale(1.4);
+    }
+
+    /* ── BOTTOM NAV ── */
+    #botnav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 1.75rem;
+    }
+
+    .nav-hint {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.3);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-btns {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    #btn-prev {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: transparent;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #btn-prev:hover {
+      border-color: rgba(255, 255, 255, 0.4);
+      color: #fff;
+    }
+
+    #btn-next {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(90deg, var(--amber), #ff8c00, var(--amber));
+      background-size: 200% 200%;
+      color: #fff;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: btnBgPulse 3s ease infinite;
+      box-shadow: 0 4px 15px rgba(246, 169, 61, 0.4);
+    }
+
+    #btn-next:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(246, 169, 61, 0.6);
+    }
+
+    @keyframes btnBgPulse {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    #slide-counter {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.25);
+      font-weight: 300;
+    }
+
+    /* ── TYPOGRAPHY HELPERS ── */
+    .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1rem;
+    }
+
+    .h-giant {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      line-height: 1.04;
+      letter-spacing: -0.04em;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+
+    .h-big {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+      line-height: 1.06;
+      letter-spacing: -0.035em;
+      color: #fff;
+      margin-bottom: 1.1rem;
+    }
+
+    .h-med {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: #fff;
+      margin-bottom: 0.9rem;
+    }
+
+    .body-lg {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.75;
+      font-weight: 300;
+      max-width: 640px;
+    }
+
+    .body-lg strong {
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .body-md {
+      font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.7;
+      font-weight: 300;
+      max-width: 580px;
+    }
+
+    .body-md strong {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+    }
+
+    .accent {
+      color: var(--amber);
+      display: inline-block;
+    }
+
+    .accent-green {
+      color: #4ECDC4;
+      display: inline-block;
+    }
+
+    .accent-red {
+      color: #FF6B6B;
+      display: inline-block;
+    }
+
+    .slide.active .accent {
+      animation: popWord 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, glowAmber 2s infinite alternate 0.6s;
+      opacity: 0;
+    }
+
+    .slide.active .accent-green {
+      animation: popWord 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, glowGreen 2s infinite alternate 0.6s;
+      opacity: 0;
+    }
+
+    .slide.active .accent-red {
+      animation: popWord 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, glowRed 2s infinite alternate 0.6s;
+      opacity: 0;
+    }
+
+    @keyframes popWord {
+      0% {
+        opacity: 0;
+        transform: translateY(15px) scale(0.8);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes glowAmber {
+      0% {
+        text-shadow: 0 0 0 rgba(246, 169, 61, 0);
+      }
+
+      100% {
+        text-shadow: 0 0 25px rgba(246, 169, 61, 0.8);
+      }
+    }
+
+    @keyframes glowGreen {
+      0% {
+        text-shadow: 0 0 0 rgba(78, 205, 196, 0);
+      }
+
+      100% {
+        text-shadow: 0 0 25px rgba(78, 205, 196, 0.8);
+      }
+    }
+
+    @keyframes glowRed {
+      0% {
+        text-shadow: 0 0 0 rgba(255, 107, 107, 0);
+      }
+
+      100% {
+        text-shadow: 0 0 25px rgba(255, 107, 107, 0.8);
+      }
+    }
+
+    /* ── SLIDE BACKGROUNDS ── */
+    .bg-dark {
+      background: var(--dark);
+    }
+
+    .bg-amber {
+      background: var(--amber);
+    }
+
+    .bg-light {
+      background: var(--bg);
+    }
+
+    .bg-dark .h-giant,
+    .bg-dark .h-big,
+    .bg-dark .h-med {
+      color: #fff;
+    }
+
+    .bg-amber .h-giant,
+    .bg-amber .h-big,
+    .bg-amber .h-med,
+    .bg-amber .eyebrow {
+      color: #1A1A14;
+    }
+
+    .bg-amber .body-lg,
+    .bg-amber .body-md {
+      color: rgba(26, 26, 20, 0.7);
+    }
+
+    .bg-amber .body-lg strong,
+    .bg-amber .body-md strong {
+      color: #1A1A14;
+    }
+
+    .bg-light .h-giant,
+    .bg-light .h-big,
+    .bg-light .h-med {
+      color: #1A1A14;
+    }
+
+    .bg-light .eyebrow {
+      color: var(--amber);
+    }
+
+    .bg-light .body-lg,
+    .bg-light .body-md {
+      color: #666;
+    }
+
+    .bg-light .body-lg strong,
+    .bg-light .body-md strong {
+      color: #1A1A14;
+    }
+
+    /* ── GRID CARDS ── */
+    .cards-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      max-width: 720px;
+      width: 100%;
+      margin-top: 1.5rem;
+    }
+
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      max-width: 820px;
+      width: 100%;
+      margin-top: 1.5rem;
+    }
+
+    .card {
+      border-radius: 14px;
+      padding: 1.4rem;
+      border: 1px solid;
+      text-align: left;
+    }
+
+    .card-dark {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .card-amber {
+      background: rgba(246, 169, 61, 0.1);
+      border-color: rgba(246, 169, 61, 0.25);
+    }
+
+    .card-light {
+      background: rgba(26, 26, 20, 0.04);
+      border-color: rgba(26, 26, 20, 0.1);
+    }
+
+    .card h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card-dark h4 {
+      color: #fff;
+    }
+
+    .card-amber h4 {
+      color: #fff;
+    }
+
+    .card-light h4 {
+      color: #1A1A14;
+    }
+
+    .card p {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .card-dark p {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .card-amber p {
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    .card-light p {
+      color: #666;
+    }
+
+    .card-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--amber);
+      opacity: 0.4;
+      margin-bottom: 0.4rem;
+      line-height: 1;
+    }
+
+    /* ── CHAT DEMO ── */
+    .chat-demo {
+      max-width: 520px;
+      width: 100%;
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      text-align: left;
+    }
+
+    .chat-msg {
+      padding: 0.9rem 1.1rem;
+      border-radius: 14px;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      font-weight: 300;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .chat-user {
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.8);
+      border-radius: 14px 14px 4px 14px;
+      align-self: flex-end;
+      max-width: 85%;
+    }
+
+    .chat-ai {
+      background: rgba(246, 169, 61, 0.12);
+      border: 1px solid rgba(246, 169, 61, 0.25);
+      color: rgba(255, 255, 255, 0.85);
+      border-radius: 14px 14px 14px 4px;
+      max-width: 90%;
+    }
+
+    .chat-ai strong {
+      color: var(--amber);
+      font-weight: 500;
+    }
+
+    .chat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+
+    .chat-label.user {
+      color: rgba(255, 255, 255, 0.3);
+      text-align: right;
+    }
+
+    .chat-label.ai {
+      color: rgba(246, 169, 61, 0.6);
+    }
+
+    .chat-confirm {
+      background: #25D366;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      align-self: center;
+      margin-top: 0.5rem;
+      animation: fadeUp 0.4s ease 0.6s both;
+      transition: background 0.2s;
+    }
+
+    .chat-confirm:hover {
+      background: #1ebe5d;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── STAT CALLOUT ── */
+    .stat-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 1.5rem 0;
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(4rem, 12vw, 8rem);
+      line-height: 1;
+      color: var(--amber);
+      letter-spacing: -0.05em;
+    }
+
+    .stat-desc {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 300;
+      margin-top: 0.5rem;
+    }
+
+    /* ── VS BLOCK ── */
+    .vs-block {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1.25rem;
+      max-width: 680px;
+      width: 100%;
+      margin-top: 1.5rem;
+      align-items: start;
+    }
+
+    .vs-side {
+      border-radius: 14px;
+      padding: 1.25rem;
+      border: 1px solid;
+    }
+
+    .vs-old {
+      background: rgba(255, 107, 107, 0.05);
+      border-color: rgba(255, 107, 107, 0.2);
+    }
+
+    .vs-new {
+      background: rgba(78, 205, 196, 0.05);
+      border-color: rgba(78, 205, 196, 0.2);
+    }
+
+    .vs-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .vs-old .vs-label {
+      color: rgba(255, 107, 107, 0.6);
+    }
+
+    .vs-new .vs-label {
+      color: rgba(78, 205, 196, 0.6);
+    }
+
+    .vs-item {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.6);
+      padding: 0.35rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      line-height: 1.4;
+      font-weight: 300;
+    }
+
+    .vs-item:last-child {
+      border-bottom: none;
+    }
+
+    .vs-item.bad {
+      color: rgba(255, 107, 107, 0.7);
+    }
+
+    .vs-item.good {
+      color: rgba(78, 205, 196, 0.8);
+    }
+
+    .vs-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.2);
+      padding-top: 2rem;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      max-width: 540px;
+      width: 100%;
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      text-align: left;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 18px;
+      top: 20px;
+      bottom: 20px;
+      width: 2px;
+      background: rgba(246, 169, 61, 0.15);
+    }
+
+    .tl-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      align-items: flex-start;
+    }
+
+    .tl-dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(246, 169, 61, 0.15);
+      border: 1px solid rgba(246, 169, 61, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tl-dot span {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--amber);
+    }
+
+    .tl-body h5 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+
+    .tl-body p {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.45);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    /* ── WA BUTTON ── */
+    .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: #25D366;
+      color: #fff;
+      border: none;
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      margin-top: 1.5rem;
+    }
+
+    .wa-btn:hover {
+      background: #1ebe5d;
+      transform: translateY(-2px);
+    }
+
+    /* ── PILL ── */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(246, 169, 61, 0.12);
+      border: 1px solid rgba(246, 169, 61, 0.3);
+      border-radius: 50px;
+      padding: 0.3rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--amber);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--amber);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(0.7);
+      }
+    }
+
+    /* ── QUOTE BLOCK ── */
+    .quote {
+      max-width: 560px;
+      border-left: 3px solid var(--amber);
+      padding: 1rem 1.5rem;
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+
+    .quote p {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.7;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .quote cite {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.3);
+      margin-top: 0.5rem;
+      display: block;
+      font-style: normal;
+    }
+
+    /* ── BIG NUMBERS GRID ── */
+    .bignums {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      max-width: 680px;
+      width: 100%;
+      margin-top: 1.5rem;
+    }
+
+    .bignum-cell {
+      text-align: center;
+    }
+
+    .bignum-val {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--amber);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .bignum-label {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.4);
+      font-weight: 300;
+      margin-top: 0.3rem;
+      line-height: 1.4;
+    }
+
+    /* ── RESPONSIVE ── */
+    /* ── STAGGERED REVEAL ── */
+    .slide.active .eyebrow,
+    .slide.active .pill {
+      animation: slideContentUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.2s;
+      opacity: 0;
+    }
+
+    .slide.active h1,
+    .slide.active h2 {
+      animation: slideContentUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.3s;
+      opacity: 0;
+    }
+
+    .slide.active p.body-lg,
+    .slide.active p.body-md {
+      animation: slideContentUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.4s;
+      opacity: 0;
+    }
+
+    .slide.active .timeline,
+    .slide.active .cards-2,
+    .slide.active .cards-3,
+    .slide.active .chat-demo,
+    .slide.active .bignums,
+    .slide.active .quote {
+      animation: slideContentUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.5s;
+      opacity: 0;
+    }
+
+    @keyframes slideContentUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media(max-width:600px) {
+
+      .cards-2,
+      .cards-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .vs-block {
+        grid-template-columns: 1fr;
+      }
+
+      .vs-divider {
+        padding-top: 0;
+      }
+
+      .bignums {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+      }
+
+      #topbar,
+      #botnav {
+        padding: 0.875rem 1.25rem;
+      }
+
+    }
+
+
+  </style>
+</head>
+
+<body>
+
+
+  <div id="topbar">
+    <div class="tb-logo"><img src="logo_ucp.bridge.png" alt="UCP.Bridge"/></div>
+    <div id="progress-wrap"></div>
+  </div>
+
+  <div id="deck"></div>
+
+  <div id="botnav">
+    <span class="nav-hint" id="nav-hint">Clique para avançar</span>
+    <div class="nav-btns">
+      <button id="btn-prev" onclick="goSlide(-1)" aria-label="Anterior">←</button>
+      <button id="btn-next" onclick="goSlide(1)"><span id="btn-label">Próximo</span> →</button>
+    </div>
+  </div>
+  <span id="slide-counter"
+    style="position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);font-size:0.72rem;color:rgba(255,255,255,0.2);z-index:100;"></span>
+
+  <script>
+    const WA = "https://wa.me/5511986377999?text=Ol%C3%A1%2C+vim+pela+apresenta%C3%A7%C3%A3o+UCP.Bridge+e+quero+entender+como+integrar+minha+loja.";
+
+    const slides = [
+
+      // ── 0. ABERTURA ──
+      {
+        bg: 'bg-dark',
+        html: `
+      <div class="pill"><div class="pill-dot"></div>Uma apresentação para empreendedores</div>
+      <h1 class="h-giant">Seu cliente já pode<br>pedir para uma <span class="accent">IA</span><br>comprar por ele.</h1>
+      <p class="body-lg" style="margin-top:0.5rem">A questão é: <strong>a sua loja está visível para essa IA?</strong></p>
+    `
+      },
+
+      // ── 1. PERGUNTA CHOQUE ──
+      {
+        bg: 'bg-dark',
+        html: `
+      <p class="eyebrow">Antes de continuar — responda honestamente</p>
+      <h2 class="h-big">Você sabia que daqui a<br>alguns dias seus clientes<br>vão falar com a Alexa,<br>o GPT ou o Gemini<br> para comprar o <span style="color:#F6A93D">rancho</span><br>do mês por eles?</h2>
+      <p class="body-lg">Sem abrir nenhum site.<br>Sem digitar cartão. Sem sair de casa.<br><strong>Só falando.</strong></p>
+    `
+      },
+
+      // ── 2. ISSO JÁ É REAL ──
+      {
+        bg: 'bg-dark',
+        html: `
+      <p class="eyebrow">Isso não é ficção científica</p>
+      <h2 class="h-big">Isso já existe.<br>Chama-se <span class="accent">Comércio Agêntico</span>.</h2>
+      <p class="body-lg">Em janeiro de 2026, o CEO do Google foi <strong>pessoalmente</strong> à maior feira de varejo do mundo — a NRF em Nova York — anunciar o protocolo que torna isso possível.<br><br><strong>O UCP. Universal Commerce Protocol.</strong></p>
+    `
+      },
+
+      // ── 3. O QUE É O UCP ──
+      {
+        bg: 'bg-dark',
+        html: `
+      <p class="eyebrow">Sem tecniquês</p>
+      <h2 class="h-big">O UCP é uma<br>"língua universal"<br>entre IAs e lojas.</h2>
+      <p class="body-lg">É como o <strong>HTTP: foi para a web</strong> nos anos 90 — um padrão que permitiu que qualquer site se comunicasse com qualquer navegador.<br><br>O UCP permite que <strong>qualquer agente de IA "converse" diretamente com o sistema da sua loja</strong>: estoque, preço, frete, pagamento.</p>
+    `
+      },
+
+      // ── 4. A JORNADA ANTIGA ──
+      {
+        bg: 'bg-dark',
+        html: `
+      <p class="eyebrow">Como é hoje</p>
+      <h2 class="h-med">O cliente quer comprar um tênis.<br>O que acontece?</h2>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"><span>1</span></div><div class="tl-body"><h5>Abre o Google</h5><p>Digita "tênis corrida pisada pronada masculino"</p></div></div>
+        <div class="tl-item"><div class="tl-dot"><span>2</span></div><div class="tl-body"><h5>Abre 5 abas</h5><p>Compara preços, lê reviews, confere frete</p></div></div>
+        <div class="tl-item"><div class="tl-dot"><span>3</span></div><div class="tl-body"><h5>Escolhe uma loja</h5><p>Cria cadastro, coloca endereço, busca o cartão</p></div></div>
+        <div class="tl-item"><div class="tl-dot"><span>4</span></div><div class="tl-body"><h5>Desiste ou compra</h5><p class="accent-red" style="color:rgba(255,107,107,0.7)">70% abandonam o carrinho neste momento</p></div></div>
+      </div>
+    `
+      },
+
+      // ── 5. A JORNADA NOVA ──
+      {
+        bg: 'bg-dark',
+        html: `
+      <p class="eyebrow">Como será com o UCP</p>
+      <h2 class="h-med">O mesmo cliente.<br>Uma experiência completamente diferente.</h2>
+      <div class="chat-demo">
+        <div>
+          <div class="chat-label user">Cliente</div>
+          <div class="chat-msg chat-user">"Preciso de um tênis de corrida para pisada pronada, tamanho 42, abaixo de R$ 500, que chegue até sexta-feira."</div>
+        </div>
+        <div>
+          <div class="chat-label ai">Gemini / ChatGPT</div>
+          <div class="chat-msg chat-ai" style="animation-delay:0.2s">Encontrei o modelo ideal na <strong>Loja do João</strong> por <strong>R$ 449</strong>. É 42, pisada pronada ✓, entrega <strong>quinta-feira</strong>. Você tem um cupom de 8% salvo. <strong>Confirmo a compra?</strong></div>
+        </div>
+        <button class="chat-confirm">"Sim, pode comprar."</button>
+      </div>
+    `
+      },
+
+      // ── 6. O CHOQUE ──
+      {
+        bg: 'bg-dark',
+        html: `
+      <p class="eyebrow">O que acabou de acontecer</p>
+      <h2 class="h-big">A venda foi feita.<br><span class="accent">Sem o cliente<br>abrir seu site.</span></h2>
+      <p class="body-lg">Sem cadastro. Sem carrinho. Sem formulário.<br>O cliente <strong>só disse "sim"</strong>.<br><br>O pagamento foi processado pela carteira digital dele.<br>O pedido chegou no seu sistema normalmente.</p>
+    `
+      },
+
+      // ── 7. E O MEU NEGÓCIO? ──
+      {
+        bg: 'bg-dark',
+        html: `
+      <p class="eyebrow">A pergunta que todo lojista faz</p>
+      <h2 class="h-big">"Mas eu perco<br>o meu cliente<br>para o Google?"</h2>
+      <p class="body-lg"><strong>Não.</strong> Essa é a parte mais importante.<br><br>O pedido, o pagamento, o pós-venda — <strong>tudo continua sendo da sua loja</strong>. A IA atua como uma <strong>vendedora terceirizada incrivelmente eficiente</strong>. Você cuida do envio, da fidelização, do suporte.</p>
+    `
+      },
+
+      // ── 8. OS TRÊS GANHOS ──
+      {
+        bg: 'bg-dark',
+        html: `
+      <p class="eyebrow">O que você ganha</p>
+      <h2 class="h-med">Três mudanças que<br>impactam direto no caixa.</h2>
+      <div class="cards-3">
+        <div class="card card-amber">
+          <div class="card-num">01</div>
+          <h4>Fim do abandono de carrinho</h4>
+          <p>O checkout se torna instantâneo. A IA já tem os dados do usuário. A fricção cai para quase zero.</p>
+        </div>
+        <div class="card card-amber">
+          <div class="card-num">02</div>
+          <h4>Competição por eficiência, não por verba</h4>
+          <p>A IA não clica em banner. Ela analisa: você tem o produto? O preço é justo? A entrega é rápida?</p>
+        </div>
+        <div class="card card-amber">
+          <div class="card-num">03</div>
+          <h4>Pós-venda automático</h4>
+          <p>"Onde está meu pedido?" — a IA responde sozinha, consultando seu sistema em tempo real.</p>
+        </div>
+      </div>
+    `
+      },
+
+      // ── 9. CASOS DE USO FUTUROS ──
+      {
+        bg: 'bg-dark',
+        html: `
+      <p class="eyebrow">Além da compra simples</p>
+      <h2 class="h-med">O que vem a seguir.</h2>
+      <div class="cards-2">
+        <div class="card card-dark">
+          <h4>🛒 Recompras automáticas</h4>
+          <p>"Sua ração de cachorro está acabando. Compro na PetShop do João como da última vez?"</p>
+        </div>
+        <div class="card card-dark">
+          <h4>↩️ Troca e devolução via chat</h4>
+          <p>"A camisa ficou pequena." — A IA gera o código de logística reversa sem ninguém da sua equipe intervir.</p>
+        </div>
+        <div class="card card-dark">
+          <h4>🏢 Compras B2B</h4>
+          <p>Agente de uma construtora cotando materiais em dezenas de fornecedores e fechando pedidos automaticamente.</p>
+        </div>
+        <div class="card card-dark">
+          <h4>📦 Assinaturas invisíveis</h4>
+          <p>Água, café, suplementos — o agente reabastece com base no histórico de consumo, sem o cliente precisar lembrar.</p>
+        </div>
+      </div>
+    `
+      },
+
+      // ── 10. OS NÚMEROS ──
+      {
+        bg: 'bg-dark',
+        html: `
+      <p class="eyebrow">Não é tendência. É agora.</p>
+      <h2 class="h-big">Os números que<br>ninguém está<br>prestando atenção.</h2>
+      <div class="bignums">
+        <div class="bignum-cell"><div class="bignum-val">693%</div><div class="bignum-label">aumento de tráfego de IA para e-commerce no final de 2025</div></div>
+        <div class="bignum-cell"><div class="bignum-val">700M</div><div class="bignum-label">usuários semanais no ChatGPT prontos para comprar</div></div>
+        <div class="bignum-cell"><div class="bignum-val">20%</div><div class="bignum-label">das transações online serão feitas por agentes até 2027</div></div>
+      </div>
+      <p class="body-md" style="margin-top:1.5rem">Fonte: Adobe Analytics · BCG · OpenAI</p>
+    `
+      },
+
+      // ── 11. O RISCO DE NÃO FAZER NADA ──
+      {
+        bg: 'bg-dark',
+        html: `
+      <p class="eyebrow">A outra face da moeda</p>
+      <h2 class="h-big">Quem não integrar<br>se torna <span class="accent-red">invisível</span><br>para as IAs.</h2>
+      <p class="body-lg">A IA não vai sugerir a sua loja se ela não estiver integrada ao protocolo.<br><br>É como ter uma loja física <strong>sem placa na rua</strong>.<br>Você existe — mas ninguém te encontra.</p>
+      <div class="quote">
+        <p>"Os varejistas que dependerem apenas do cliente entrar ativamente no seu site correm o risco de se tornarem invisíveis."</p>
+        <cite>— Análise UCP.Bridge, 2026</cite>
+      </div>
+    `
+      },
+
+      // ── 12. O QUE FAZER AGORA ──
+      {
+        bg: 'bg-dark',
+        html: `
+      <p class="eyebrow">O plano de ação</p>
+      <h2 class="h-med">O que o empreendedor<br>precisa fazer <span class="accent">agora</span>.</h2>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"><span>1</span></div><div class="tl-body"><h5>Organizar o catálogo de produtos</h5><p>Dados ricos, estoque em tempo real, sem erros. A IA só recomenda quem tem informação confiável.</p></div></div>
+        <div class="tl-item"><div class="tl-dot"><span>2</span></div><div class="tl-body"><h5>Configurar o Google Merchant Center</h5><p>A porta de entrada para o ecossistema UCP do Google já existe — a maioria das lojas só não está aproveitando.</p></div></div>
+        <div class="tl-item"><div class="tl-dot"><span>3</span></div><div class="tl-body"><h5>Integrar ACP + UCP</h5><p>Ativar os endpoints que permitem que os agentes do ChatGPT e do Gemini comprem na sua loja.</p></div></div>
+        <div class="tl-item"><div class="tl-dot"><span>4</span></div><div class="tl-body"><h5>Estar pronto antes da concorrência</h5><p>No Brasil, isso chega em meses. Quem integrar primeiro aparece primeiro nos resultados das IAs.</p></div></div>
+      </div>
+    `
+      },
+
+      // ── 13. O QUE É A UCP.BRIDGE ──
+      {
+        bg: 'bg-amber',
+        html: `
+      <p class="eyebrow" style="color:rgba(26,26,20,0.5)">Nossa missão</p>
+      <h2 class="h-big" style="color:#1A1A14">A UCP.Bridge<br>constrói essa ponte<br>para o seu negócio.</h2>
+      <p class="body-lg" style="color:rgba(26,26,20,0.65)">Não importa o tamanho da sua operação.<br>Não importa qual plataforma você usa.<br><br><strong style="color:#1A1A14">Fazemos sua loja falar a língua dos agentes.</strong></p>
+      <div class="cards-2" style="margin-top:1.5rem">
+        <div class="card" style="background:rgba(26,26,20,0.06);border-color:rgba(26,26,20,0.12);">
+          <h4 style="color:#1A1A14;font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.4rem;">Consultoria Estratégica</h4>
+          <p style="color:rgba(26,26,20,0.6);font-size:0.82rem;line-height:1.6;font-weight:300;">Diagnóstico, roadmap e workshop para times comerciais e de tecnologia.</p>
+        </div>
+        <div class="card" style="background:rgba(26,26,20,0.06);border-color:rgba(26,26,20,0.12);">
+          <h4 style="color:#1A1A14;font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.4rem;">Integração Técnica</h4>
+          <p style="color:rgba(26,26,20,0.6);font-size:0.82rem;line-height:1.6;font-weight:300;">Implementação ACP + UCP sobre o sistema que você já tem. Sem trocar plataforma.</p>
+        </div>
+      </div>
+    `
+      },
+
+      // ── 14. CTA FINAL ──
+      {
+        bg: 'bg-dark',
+        html: `
+      <div class="pill"><div class="pill-dot"></div>Próximo passo</div>
+      <h2 class="h-big">Sua loja está<br>pronta para ser<br><span class="accent">encontrada pelas IAs</span>?</h2>
+      <p class="body-lg">Fale com a gente. Em 30 minutos fazemos um diagnóstico gratuito do seu e-commerce e mostramos exatamente o que precisa ser feito — sem compromisso.</p>
+      <a class="wa-btn" href="${WA}" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.854L.057 23.643a.5.5 0 00.612.612l5.787-1.475A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.795 9.795 0 01-5.031-1.387l-.361-.214-3.735.952.969-3.635-.235-.374A9.794 9.794 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+        Quero o diagnóstico gratuito
+      </a>
+      <p style="margin-top:0.875rem;font-size:0.78rem;color:rgba(255,255,255,0.25);font-weight:300;">30 minutos · sem compromisso · resposta em até 2h</p>
+    `
+      }
+
+    ];
+
+    let current = 0;
+    const total = slides.length;
+
+    function buildDeck() {
+      const deck = document.getElementById('deck');
+      const pw = document.getElementById('progress-wrap');
+      deck.innerHTML = '';
+      pw.innerHTML = '';
+      slides.forEach((s, i) => {
+        const div = document.createElement('div');
+        div.className = 'slide ' + s.bg;
+        div.id = 'slide-' + i;
+        div.innerHTML = s.html;
+        deck.appendChild(div);
+        const dot = document.createElement('div');
+        dot.className = 'prog-dot';
+        dot.id = 'dot-' + i;
+        pw.appendChild(dot);
+      });
+    }
+
+    function goSlide(dir) {
+      const next = current + dir;
+      if (next < 0 || next >= total) return;
+      const cur = document.getElementById('slide-' + current);
+      cur.classList.remove('active');
+      cur.classList.add('exit');
+      setTimeout(() => cur.classList.remove('exit'), 500);
+      current = next;
+      const nxt = document.getElementById('slide-' + current);
+      nxt.classList.add('active');
+      update();
+    }
+
+    function update() {
+      document.querySelectorAll('.prog-dot').forEach((d, i) => {
+        d.className = 'prog-dot' + (i < current ? ' done' : i === current ? ' current' : '');
+      });
+      document.getElementById('slide-counter').textContent = (current + 1) + ' / ' + total;
+      document.getElementById('btn-prev').style.opacity = current === 0 ? '0.2' : '1';
+      document.getElementById('btn-prev').style.pointerEvents = current === 0 ? 'none' : 'all';
+      const isLast = current === total - 1;
+      document.getElementById('btn-label').textContent = isLast ? 'Falar no WhatsApp' : 'Próximo';
+      if (isLast) {
+        document.getElementById('btn-next').onclick = () => window.open(WA, '_blank');
+      } else {
+        document.getElementById('btn-next').onclick = () => goSlide(1);
+      }
+      const hints = ['Clique para avançar', 'Use as setas ou aperte → no teclado', '', '', '', '', '', '', '', '', '', '', '', 'Última tela'];
+      document.getElementById('nav-hint').textContent = hints[current] || '';
+    }
+
+    // keyboard
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') goSlide(1);
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goSlide(-1);
+    });
+
+    // touch
+    let tx = 0;
+    document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+    document.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - tx;
+      if (Math.abs(dx) > 50) goSlide(dx < 0 ? 1 : -1);
+    });
+
+    buildDeck();
+    document.getElementById('slide-0').classList.add('active');
+    update();
+  </script>
+</body>
+
+</html>
