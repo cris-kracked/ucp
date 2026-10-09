@@ -122,6 +122,23 @@
     }
 
     /* ── NAV BAR ── */
+    /* ── WATERMARK BACKGROUND ── */
+    .bg-watermark {
+      position: fixed;
+      right: -10vw;
+      top: 45%;
+      transform: translateY(-50%) scale(2.6);
+      width: 450px;
+      height: 450px;
+      background: url('logo_ucp_bg.png') no-repeat center center / contain;
+      opacity: 0.15; /* 15% de transparência elegante */
+      filter: invert(1) brightness(1.8);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV BAR ── */
     #topbar {
       position: fixed;
       top: 0;
@@ -132,13 +149,20 @@
       justify-content: space-between;
       align-items: center;
       padding: 1rem 1.75rem;
+      background: linear-gradient(180deg, rgba(26,26,20,0.92) 0%, rgba(26,26,20,0) 100%);
+      pointer-events: none;
+    }
+
+    #topbar * {
+      pointer-events: auto;
     }
 
     .tb-logo img {
-      zoom: 0.3; /* Exatos 30% da dimensão original do arquivo PNG */
+      height: 28px;
       width: auto;
-      height: auto;
-      transform-origin: top left;
+      max-width: 140px;
+      object-fit: contain;
+      display: block;
       opacity: 1;
     }
 
@@ -176,6 +200,19 @@
       justify-content: space-between;
       align-items: center;
       padding: 1.25rem 1.75rem;
+      background: linear-gradient(0deg, rgba(26,26,20,0.95) 0%, rgba(26,26,20,0) 100%);
+      pointer-events: none;
+    }
+
+    #botnav * {
+      pointer-events: auto;
+    }
+
+    .botnav-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.2rem;
     }
 
     .nav-hint {
@@ -183,6 +220,13 @@
       color: rgba(255, 255, 255, 0.3);
       font-weight: 300;
       letter-spacing: 0.04em;
+    }
+
+    #slide-counter {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.4);
+      font-weight: 500;
+      letter-spacing: 0.05em;
     }
 
     .nav-btns {
@@ -954,6 +998,11 @@
 
     @media(max-width:600px) {
 
+      .slide {
+        padding: 4.5rem 1.25rem 5rem 1.25rem;
+        justify-content: center;
+      }
+
       .cards-2,
       .cards-3 {
         grid-template-columns: 1fr;
@@ -974,7 +1023,29 @@
 
       #topbar,
       #botnav {
-        padding: 0.875rem 1.25rem;
+        padding: 0.75rem 1rem;
+      }
+
+      .nav-hint {
+        display: none;
+      }
+
+      .bg-watermark {
+        right: -30vw;
+        width: 380px;
+        height: 380px;
+        opacity: 0.12;
+      }
+
+      #btn-next {
+        padding: 0.6rem 1.1rem;
+        font-size: 0.85rem;
+      }
+
+      #btn-prev {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
       }
 
     }
@@ -985,6 +1056,7 @@
 
 <body>
 
+  <div class="bg-watermark"></div>
 
   <div id="topbar">
     <div class="tb-logo"><img src="logo_ucp.bridge.png" alt="UCP.Bridge"/></div>
@@ -994,14 +1066,15 @@
   <div id="deck"></div>
 
   <div id="botnav">
-    <span class="nav-hint" id="nav-hint">Clique para avançar</span>
+    <div class="botnav-left">
+      <span class="nav-hint" id="nav-hint">Clique para avançar</span>
+      <span id="slide-counter"></span>
+    </div>
     <div class="nav-btns">
       <button id="btn-prev" onclick="goSlide(-1)" aria-label="Anterior">←</button>
       <button id="btn-next" onclick="goSlide(1)"><span id="btn-label">Próximo</span> →</button>
     </div>
   </div>
-  <span id="slide-counter"
-    style="position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);font-size:0.72rem;color:rgba(255,255,255,0.2);z-index:100;"></span>
 
   <script>
     const WA = "https://wa.me/5547992506691?text=Ol%C3%A1%2C+vim+pela+apresenta%C3%A7%C3%A3o+UCP.Bridge+e+quero+entender+como+integrar+minha+loja.";
