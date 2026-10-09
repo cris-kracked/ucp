@@ -1,0 +1,33 @@
+# Doorman strategy for AI Agents & Search Crawlers
+User-agent: *
+Allow: /
+
+# AI Crawlers & Agents
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://ucp.kanay.ia.br/sitemap.xml

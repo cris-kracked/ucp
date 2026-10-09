@@ -1,0 +1,6 @@
+{
+  "name": "ucp-bridge-app",
+  "rewrites": [
+    { "source": "/", "destination": "/ucpbridge_v2.html" }
+  ]
+}

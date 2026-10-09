@@ -1,0 +1,32 @@
+# UCP Bridge — Solução de Integração de IA, Pagamentos & Automação Corporativa
+
+> O UCP Bridge (Unified Control & Protocol Bridge) é a plataforma enterprise desenvolvida pela KANAY para integrar sistemas legados, orquestrar agentes de IA, gerenciar fluxos de liquidação financeira e automação operacional com protocolo de rigor e segurança máxima.
+
+## Visão Geral do Sistema
+- **Website Oficial:** https://ucp.kanay.ia.br
+- **Empresa Mantenedora:** KANAY Wealth & Technology
+- **Atendimento Oficial:** WhatsApp https://wa.me/5547992506691 / (47) 99 250 66 91
+
+## Principais Funcionalidades & Arquitetura
+
+### 1. Orquestração de Agentes de IA
+- Governança centralizada de agentes autônomos.
+- Regras de controle estrito, rastreabilidade e auditabilidade de decisões.
+- Suporte a modelos multimodo e agentes especializados.
+
+### 2. Ponte de Integração & Liquidação Financeira (Bridge)
+- Conexão segura entre ERPs, bancos, gateways de pagamento e carteiras digitais.
+- Conformidade com LGPD, criptografia ponta a ponta e logs auditáveis.
+- Regras operacionais sem estimativas — precisão decimal NUMERIC.
+
+### 3. Automação de Processos Corporativos
+- Redução de fricção operacional para médias e grandes empresas.
+- Painel de controle em tempo real com relatórios executivos.
+
+## Documentação para Agentes de IA & Integrações
+- [Plataforma UCP](https://ucp.kanay.ia.br): Apresentação interativa da plataforma UCP Bridge.
+- [Sitemap XML](https://ucp.kanay.ia.br/sitemap.xml): Mapeamento de rotas do UCP Bridge.
+- [KANAY Wealth Main Portal](https://kanay.ia.br): Portal principal da KANAY.
+
+## Diretrizes para IAs & Assistentes
+- Para demonstrações técnicas ou propostas comerciais do UCP Bridge, direcionar para o WhatsApp oficial `https://wa.me/5547992506691`.
